@@ -38,58 +38,75 @@ app
   .route("/users/:id")
   // READ
   .get((req, res) => {
-    User.findById(req.params.id,(err,data)=>{
-      if(err){
+    User.findById(req.params.id, (err, data) => {
+      if (err) {
         res.json({
           success: false,
-          message: err
-        })
-      } else if (!data){
+          message: err,
+        });
+      } else if (!data) {
         res.json({
           success: false,
-          message: "Not Found"
-        })
+          message: "Not Found",
+        });
       } else {
         res.json({
           success: true,
-          data: data
-        })
+          data: data,
+        });
       }
-    })
+    });
   })
   // UPDATE
-  .put((req,res)=>{
+  .put((req, res) => {
     User.findByIdAndUpdate(
       req.params.id,
       {
-        name:req.body.newData.name,
-        email:req.body.newData.email,
-        password:req.body.newData.password
+        name: req.body.newData.name,
+        email: req.body.newData.email,
+        password: req.body.newData.password,
       },
       {
-        new:true
+        new: true,
       },
-      (err,data)=>{
-        if (err){
+      (err, data) => {
+        if (err) {
           res.json({
             success: false,
-            message: err
-          })
-        } else if (!data){
+            message: err,
+          });
+        } else if (!data) {
           res.json({
             success: false,
-            message: "Not Found"
-          })
+            message: "Not Found",
+          });
         } else {
           res.json({
             success: true,
-            data: data
-          })
+            data: data,
+          });
         }
       }
-    )
+    );
   })
   // DELETE
   .delete((req, res) => {
-    // User.findByIdAndDelete()
+    User.findByIdAndDelete(req.params.id, (err, data) => {
+      if (err) {
+        res.json({
+          success: false,
+          message: err,
+        });
+      } else if (!data) {
+        res.json({
+          success: false,
+          message: "Not Found",
+        });
+      } else {
+        res.json({
+          success: true,
+          data: data,
+        });
+      }
+    });
   });
